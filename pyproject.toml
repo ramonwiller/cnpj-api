@@ -1,0 +1,27 @@
+[project]
+name = "cnpj-api"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "Ramon Willer",email = "willer.ramon@gmail.com"}
+]
+readme = "README.md"
+requires-python = ">=3.13"
+
+dependencies = [
+    "fastapi[standard] (>=0.128.2,<0.129.0)",
+    "pydantic-settings (>=2.12.0,<3.0.0)",
+    "sqlalchemy (>=2.0.46,<3.0.0)",
+    "alembic (>=1.18.3,<2.0.0)",
+    "asyncpg (>=0.31.0,<0.32.0)",
+    "psycopg2-binary (>=2.9.11,<3.0.0)"
+]
+
+[tool.poetry]
+packages = [
+    { include = "app" }
+]
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"

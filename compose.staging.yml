@@ -1,0 +1,6 @@
+services:
+
+  api:
+    command: /start.sh
+    ports:
+      - "8001:8000"
