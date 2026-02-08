@@ -40,12 +40,15 @@ class BaseCSVPipeline(ABC):
         *,
         show_progress: bool = True,
         debug: bool = False,
+        auto_commit: bool = False,
+        auto_commit_batch_size: int = 1000,
     ) -> dict[str, int]:
         """
         Executa ETL: extrai do CSV, transforma e persiste um registro por vez (insert/update).
         Retorna estatísticas (processed, inserted, updated, errors).
         Se show_progress=True, exibe barra de progresso.
         Se debug=True, exibe erros (traceback) e detalhes de cada operação (inserted/updated/skipped).
+        Se auto_commit=True, realiza commit a cada auto_commit_batch_size registros processados.
         """
         path = Path(path)
         if not path.exists():
@@ -87,6 +90,8 @@ class BaseCSVPipeline(ABC):
                             stats["updated"] += 1
                         elif result == "skipped":
                             stats["skipped"] += 1
+                        if auto_commit and stats["processed"] % auto_commit_batch_size == 0:
+                            await self.session.commit()
                         if debug:
                             codigo = getattr(model, "codigo", None)
                             logger.debug(

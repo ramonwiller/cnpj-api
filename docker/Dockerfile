@@ -3,6 +3,8 @@ FROM python:3.13-slim-bookworm
 # Evita .pyc e melhora logs
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
+# No container, poetry deve usar o mesmo Python onde as deps foram instaladas (evita venv vazio ao rodar como user app)
+ENV POETRY_VIRTUALENVS_CREATE=false
 
 WORKDIR /app
 
