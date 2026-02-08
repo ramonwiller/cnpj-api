@@ -3,6 +3,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.core.config import settings
+from app.api.v1 import router as v1_router
 
 
 @asynccontextmanager
@@ -40,6 +41,8 @@ def create_app() -> FastAPI:
     @app.get("/health", include_in_schema=False)
     async def health():
         return {"status": "ok"}
+
+    app.include_router(v1_router, prefix="/api")
 
     return app
 

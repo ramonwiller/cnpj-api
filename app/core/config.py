@@ -27,7 +27,8 @@ class Settings(BaseSettings):
     )
     postgres_port: int = Field(default=5432, validation_alias='POSTGRES_PORT')
     postgres_db: str = Field(default='cnpj_api', validation_alias='POSTGRES_DB')
-    
+    page_limit: int = Field(default=25, validation_alias='PAGE_LIMIT')
+
     @property
     def database_url(self) -> str:
         return (
@@ -42,7 +43,7 @@ class Settings(BaseSettings):
             f'@{self.postgres_host}:{self.postgres_port}/{self.postgres_db}'
         )
 
-    model_config = SettingsConfigDict(env_file='.env')
+    model_config = SettingsConfigDict(env_file='.env', extra='ignore')
 
 
 settings = Settings()

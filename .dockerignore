@@ -1,0 +1,75 @@
+# Git
+.git
+.gitignore
+.gitattributes
+
+# Environment & secrets (nunca na imagem)
+.env
+.env.*
+!.env.example
+
+# Python cache & build
+__pycache__
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+dist/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual environments
+.venv
+venv
+ENV
+env
+
+# IDE & editors
+.idea
+.vscode
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Testes (não necessários na imagem de produção)
+tests/
+.pytest_cache
+.coverage
+htmlcov/
+.tox
+.nox
+coverage.xml
+*.cover
+.hypothesis
+
+# Linting & type checking
+.mypy_cache
+.dmypy.json
+dmypy.json
+.ruff_cache
+
+# Jupyter
+.ipynb_checkpoints
+
+# Logs & dados locais
+*.log
+logs/
+*.sqlite
+*.db
+storage/
+
+# Documentação e compose (não usados na imagem)
+README.md
+compose.yaml
+compose.dev.yaml
+compose.prod.yaml
+compose.staging.yml
+
+# Misc
+*.bak
+.cache

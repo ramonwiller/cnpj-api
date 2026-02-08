@@ -30,11 +30,20 @@ COPY migrations /app/migrations
 COPY alembic.ini /app/alembic.ini
 
 # -------------------------------
+# Usuário não-root (UID 1000). Padrão do projeto.
+# -------------------------------
+RUN groupadd --gid 1000 app \
+    && useradd --uid 1000 --gid app --shell /bin/bash --create-home --home-dir /home/app app \
+    && chown -R app:app /app
+
+# -------------------------------
 # Start script
 # -------------------------------
 COPY docker/start.sh /start.sh
 RUN chmod +x /start.sh
 
 EXPOSE 8000
+
+USER app
 
 CMD ["/start.sh"]
