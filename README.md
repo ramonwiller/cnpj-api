@@ -45,6 +45,7 @@ Atualmente, o ETL suporta os seguintes domínios:
 |qualificacoes  |Qualificação de sócios                          |QUALSCSV        |
 |naturezas      |Natureza jurídica                               |NATJUCSV        |
 |cnaes          |Classificação Nacional de Atividades Econômicas |CNAECSV         |
+|motivos        |Motivos da Situação Cadastral                   |MOTICSV         |
 
 ### Exemplos de Execução por Domínio
 
@@ -63,6 +64,9 @@ python -m app.etl naturezas 'storage/F.K03200$Z.D60110.NATJUCSV'
 
 # CNAEs
 python -m app.etl cnaes 'storage/F.K03200$Z.D60110.CNAECSV'
+
+# Motivos
+python -m app.etl motivos 'storage/F.K03200$Z.D60110.MOTICSV'
 ```
 
 
