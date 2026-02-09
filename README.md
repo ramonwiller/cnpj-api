@@ -1,6 +1,6 @@
 # CNPJ API
 
-Este projeto open source disponibiliza uma API REST para consulta programática aos dados do Cadastro Nacional da Pessoa Jurídica (CNPJ), com base nas informações públicas fornecidas pela Secretaria Especial da Receita Federal do Brasil (RFB).
+Este projeto disponibiliza uma API REST para consulta aos dados do Cadastro Nacional da Pessoa Jurídica (CNPJ), com base nas informações públicas fornecidas pela Secretaria Especial da Receita Federal do Brasil (RFB).
 
 A API permite acessar, de forma simples e padronizada, informações cadastrais de pessoas jurídicas e outras entidades registradas no CNPJ, utilizando endpoints REST que consultam diretamente um banco de dados estruturado a partir da base oficial.
 
@@ -67,6 +67,9 @@ python -m app.etl cnaes 'storage/F.K03200$Z.D60110.CNAECSV'
 
 # Motivos
 python -m app.etl motivos 'storage/F.K03200$Z.D60110.MOTICSV'
+
+# Empresas
+python -m app.etl empresas 'storage/K3241.K03200Y0.D60110.EMPRECSV'
 
 # Estabelecimentos
 python -m app.etl estabelecimentos 'storage/K3241.K03200Y0.D60110.ESTABELE'

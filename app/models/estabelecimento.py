@@ -35,7 +35,7 @@ class Estabelecimento(Base):
     __tablename__ = 'estabelecimentos'
 
     # Chave primária composta: os 3 juntos são únicos;
-    cnpj_basico = Column(String(10), primary_key=True, nullable=False)
+    cnpj_basico = Column(String(10), ForeignKey('empresas.cnpj_basico'), nullable=False, primary_key=True)
     cnpj_ordem = Column(String(4), primary_key=True, nullable=False)
     cnpj_dv = Column(String(2), primary_key=True, nullable=False)
     identificador_matriz_filial = Column(String(1), nullable=False, default=IdentificadorMatrizFilial.MATRIZ)

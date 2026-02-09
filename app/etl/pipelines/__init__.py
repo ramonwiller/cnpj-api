@@ -6,6 +6,7 @@ from app.etl.pipelines.municipios import MunicipiosPipeline
 from app.etl.pipelines.naturezas import NaturezasPipeline
 from app.etl.pipelines.paises import PaisesPipeline
 from app.etl.pipelines.qualificacoes import QualificacoesPipeline
+from app.etl.pipelines.simples import SimplesPipeline
 
 __all__ = [
     "CnaesPipeline",
@@ -16,4 +17,5 @@ __all__ = [
     "NaturezasPipeline",
     "PaisesPipeline",
     "QualificacoesPipeline",
+    "SimplesPipeline",
 ]
