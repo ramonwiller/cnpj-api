@@ -4,6 +4,7 @@ from app.repositories.natureza import NaturezaRepository
 from app.repositories.qualificacao import QualificacaoRepository
 from app.repositories.cnae import CnaeRepository
 from app.repositories.empresa import EmpresaRepository
+from app.repositories.estabelecimento import EstabelecimentoRepository
 
 __all__ = [
     "PaisRepository",
@@ -12,4 +13,5 @@ __all__ = [
     "QualificacaoRepository",
     "CnaeRepository",
     "EmpresaRepository",
+    "EstabelecimentoRepository",
 ]

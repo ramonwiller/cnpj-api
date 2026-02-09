@@ -13,6 +13,7 @@ from app.etl.session import get_async_session
 from app.etl.pipelines import (
     CnaesPipeline,
     EmpresasPipeline,
+    EstabelecimentosPipeline,
     MotivosPipeline,
     MunicipiosPipeline,
     NaturezasPipeline,
@@ -291,6 +292,41 @@ async def _cmd_empresas(args: argparse.Namespace) -> int:
     return 0
 
 
+async def _cmd_estabelecimentos(args: argparse.Namespace) -> int:
+    path = _resolve_path(args.file)
+    if not path.exists():
+        print(f"Erro: arquivo não encontrado: {path}", file=sys.stderr)
+        return 1
+    quiet = getattr(args, "quiet", False)
+    debug = getattr(args, "debug", False)
+    _setup_logging(quiet, debug)
+    async with get_async_session() as session:
+        pipeline = EstabelecimentosPipeline(session)
+        if getattr(args, "dry_run", False):
+            with path.open(newline="", encoding=pipeline.encoding) as f:
+                import csv
+                r = csv.DictReader(
+                    f,
+                    delimiter=pipeline.delimiter,
+                    fieldnames=list(pipeline.fieldnames) if pipeline.fieldnames else None,
+                )
+                pipeline._validate_header(list(r.fieldnames or []))
+                for i, row in enumerate(r):
+                    if i >= 1:
+                        break
+                    pipeline.transform_row(row)
+            print("Dry-run OK: CSV válido.")
+            return 0
+        stats = await pipeline.run(
+            path,
+            show_progress=not quiet,
+            debug=debug,
+            auto_commit=getattr(args, "auto_commit", False),
+        )
+    print("ETL concluído:", stats)
+    return 0
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="ETL CNPJ API")
     sub = parser.add_subparsers(dest="pipeline", required=True)
@@ -462,6 +498,32 @@ def main() -> int:
         help="Realizar commit a cada 1000 registros processados",
     )
     p_empresas.set_defaults(func=_cmd_empresas)
+
+    p_estabelecimentos = sub.add_parser(
+        "estabelecimentos", help="Importar CSV de estabelecimentos (ESTABELE)"
+    )
+    p_estabelecimentos.add_argument(
+        "file",
+        help="Caminho do CSV (ex.: storage/K3241.K03200Y0.D60110.ESTABELE). Relativo à raiz do projeto ou absoluto.",
+    )
+    p_estabelecimentos.add_argument("--dry-run", action="store_true", help="Apenas validar CSV")
+    p_estabelecimentos.add_argument(
+        "--quiet",
+        "-q",
+        action="store_true",
+        help="Sem barra de progresso nem logging",
+    )
+    p_estabelecimentos.add_argument(
+        "--debug",
+        action="store_true",
+        help="Exibir erros (traceback) e detalhes de cada operação (inserted/updated/skipped)",
+    )
+    p_estabelecimentos.add_argument(
+        "--auto-commit",
+        action="store_true",
+        help="Realizar commit a cada 1000 registros processados",
+    )
+    p_estabelecimentos.set_defaults(func=_cmd_estabelecimentos)
 
     args = parser.parse_args()
     return asyncio.run(args.func(args))

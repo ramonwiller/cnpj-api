@@ -67,6 +67,9 @@ python -m app.etl cnaes 'storage/F.K03200$Z.D60110.CNAECSV'
 
 # Motivos
 python -m app.etl motivos 'storage/F.K03200$Z.D60110.MOTICSV'
+
+# Estabelecimentos
+python -m app.etl estabelecimentos 'storage/K3241.K03200Y0.D60110.ESTABELE'
 ```
 
 
